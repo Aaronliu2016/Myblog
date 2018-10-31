@@ -25,7 +25,7 @@ SECRET_KEY = 'mp^^f4pd!8c0e&@boq4shok-d+mfnst#g@41v0$y8x==nnk0#h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost ', '.yinhaodashu.tk']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost ', '.dashutalk.tk']
 
 
 # Application definition
