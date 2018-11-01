@@ -2,7 +2,8 @@
 {% load highlight %}
 
 {% block main_block %}
-<main class="col-md-8">
+<div class="card aticle-card">
+    <div class="card-body">
     {% if query %}
         {% for result in page.object_list %}
             <article class="post post-{{ result.object.pk }}">
@@ -49,5 +50,6 @@
     {% else %}
         请输入搜索关键词，例如 django
     {% endif %}
-</main>
+    </div>
+</div>
 {% endblock main_block %}
