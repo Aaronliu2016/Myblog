@@ -1,73 +1,191 @@
 {% extends 'blog/base.html' %}
+{% load blog_tags %}
+
+{% block left_sidebar_block %}
+<!--<div class="col-md-2 d-none d-lg-block">-->
+    <!--&lt;!&ndash;personal info card&ndash;&gt;-->
+    <!--<div class="card small shadow-sm align-items-center" id="personal-info">-->
+        <!--<div class="icon-container">-->
+            <!--<img src="https://avatars1.githubusercontent.com/u/17445025?s=400&u=5244d9fc6fa8b64fd99139230b8c8ee324455347&v=4" class="icon-img" alt="">-->
+        <!--</div>-->
+      <!--<div class="card-body" id="personal-info-body">-->
+        <!--<h5 class="card-title">薛定猫的饿</h5>-->
+        <!--<p class="card-text" id="personal-desc">物质极大丰富，淫民为所欲为，Excited！</p>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--&lt;!&ndash; personal content card&ndash;&gt;-->
+    <!--<div class="card small shadow-sm" id="personal-content">-->
+      <!--<ul class="list-group">-->
+        <!--<a href="#" class="list-group-item no-border-list active">发布的动态</a>-->
+        <!--<a href="#" class="list-group-item no-border-list">发布的文章</a>-->
+        <!--<a href="#" class="list-group-item no-border-list">关注的人</a>-->
+        <!--<a href="#" class="list-group-item no-border-list">收藏的内容</a>-->
+      <!--</ul>-->
+    <!--</div>-->
+<!--</div>-->
+
+{% endblock %}
+
+
 {% block main_block %}
+<div class="col-md-8 small">
+    <nav aria-label="breadcrumb" class="sticky-top shadow">
+        <ol class="breadcrumb mb-1" style="padding:15px 10px; font-size:16px;">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">首页</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'category' post.category.pk %}">{{ post.category }}</a></li>
+        </ol>
+    </nav>
+    <div class="card article-card mb-2 shadow-sm">
 
-<div class="card article-card">
-    <div class="card-body">
-        <h3 class="card-title">{{ post.title }}</h3>
-        <div class="entry-meta">
-            <span class="post-category"><a href="{% url 'category' post.category.pk %}">{{ post.category.name }}</a></span>
-            <span class="post-date"><a href="{% url 'archives' post.created_time.year post.created_time.month %}"><time class="entry-date"
-                                                      datetime="{{ post.created_time }}">{{ post.created_time }}</time></a></span>
-            <span class="post-author"><a href="#">{{ post.author }}</a></span>
-            <span class="comments-link"><a href="#comment-list">{{ post.comment_set.count }} 评论</a></span>
-            <span class="views-count"><a href="#">{{ post.views }} 阅读</a></span>
-        </div>
-        <div class="card-text clearfix">
-            {{ post.body|safe }}
+        <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <div class="entry-meta">
+                <span class="post-category"><a href="{% url 'category' post.category.pk %}">{{ post.category.name }}</a></span>
+                <span class="post-date"><a href="{% url 'archives' post.created_time.year post.created_time.month %}"><time class="entry-date"
+                                                          datetime="{{ post.created_time }}">{{ post.created_time }}</time></a></span>
+                <span class="post-author"><a href="#">{{ post.author }}</a></span>
+                <span class="comments-link"><a href="#comment-list">{{ post.comment_set.count }} 评论</a></span>
+                <span class="views-count"><a href="#">{{ post.views }} 阅读</a></span>
+            </div>
+            <div class="card-text clearfix">
+                {{ post.body|safe }}
+            </div>
         </div>
     </div>
-</div>
 
-<div class="card article-card">
-    <div class="card-header">评论区</div>
-    <div class="card-body">
-        <form action="{% url 'post_comment' post.pk %}" method="post" class="form-group">
-            {% csrf_token %}
-            <div class="row">
-                <div class="col-md-4">
-                    <label for="{{ form.name.id_for_label }}">名字：</label>
-                    {{ form.name }}
-                    {{ form.name.errors }}
-                </div>
-                <div class="col-md-4">
-                    <label for="{{ form.email.id_for_label }}">邮箱：</label>
-                    {{ form.email }}
-                    {{ form.email.errors }}
-                </div>
-                <div class="col-md-4">
-                    <label for="{{ form.url.id_for_label }}">URL：</label>
-                    {{ form.url }}
-                    {{ form.url.errors }}
-                </div>
-                <div class="col-md-12">
-                    <label for="{{ form.text.id_for_label }}">评论：</label>
-                    <div>
-                        {{ form.text }}
-                        {{ form.text.errors }}
+    <div class="card article-card mb-2 shadow-sm">
+        <h6 class="card-header">评论区</h6>
+        <div class="card-body">
+            <form action="{% url 'post_comment' post.pk %}" method="post" class="form-group">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="{{ form.name.id_for_label }}">名字：</label>
+                        {{ form.name }}
+                        {{ form.name.errors }}
                     </div>
-                    <button type="submit" class="btn btn-default">发表</button>
+                    <div class="col-md-4">
+                        <label for="{{ form.email.id_for_label }}">邮箱：</label>
+                        {{ form.email }}
+                        {{ form.email.errors }}
+                    </div>
+                    <div class="col-md-4">
+                        <label for="{{ form.url.id_for_label }}">URL：</label>
+                        {{ form.url }}
+                        {{ form.url.errors }}
+                    </div>
+                    <div class="col-md-12">
+                        <label for="{{ form.text.id_for_label }}">评论：</label>
+                        <div>
+                            {{ form.text }}
+                            {{ form.text.errors }}
+                        </div>
+                        <button type="submit" class="btn btn-default btn-sm">发表</button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 
-<div class="card article-card">
-    <div class="card-header">
-        <h3>评论列表: 共 <span>{{ post.comment_set.count }}</span> 条评论</h3>
+    <div class="card article-card mb-2 shadow-sm">
+        <div class="card-header">
+            <h6>评论列表: 共 <span>{{ post.comment_set.count }}</span> 条评论</h6>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+            {% for comment in comment_list %}
+                <li class="list-group-item">
+                    <span class="nickname">{{ comment.name }}</span>
+                    <time class="submit-date">{{ comment.created_time }}</time>
+                    <div class="card-text">
+                    {{ comment.text }}
+                    </div>
+                </li>
+                {% empty %}
+                <div class="card-text">暂无评论</div>
+                {% endfor %}
+        </ul>
+        </div>
+
     </div>
-    <ul class="list-group">
-        {% for comment in comment_list %}
-        <li class="list-group-item">
-            <span class="nickname">{{ comment.name }}</span>
-            <time class="submit-date">{{ comment.created_time }}</time>
-            <div class="text">
-                {{ comment.text }}
-            </div>
-        </li>
-        {% empty %}
-        暂无评论
-        {% endfor %}
-    </ul>
 </div>
 {% endblock %}
+
+{% block right_sidebar_block %}
+<!--right sidebar-->
+<div class="col-md-4 d-none d-lg-block small shadow-sm">
+    <form class="input-group mb-2" action="{% url 'haystack_search' %}">
+        <input class="form-control" name="q" type="search" placeholder="Search" aria-label="Search">
+        <div class="input-group-append">
+            <button class="btn btn-default btn-sm" type="submit">搜一哈</button>
+        </div>
+    </form>
+
+
+    <div class="card sidebar-card sticky-top shadow-sm">
+        <h6 class="card-header">文章目录</h6>
+        {% get_recent_posts as recent_posts_list %}
+        <ul class="list-group">
+            {{ post.toc|safe }}
+        </ul>
+    </div>
+
+    <div class="card sidebar-card shadow-sm">
+        <h6 class="card-header">最新文章</h6>
+        {% get_recent_posts as recent_posts_list %}
+        <ul class="list-group">
+            {% for post in recent_posts_list %}
+            <a href="{{ post.get_absolute_url }}" class="list-group-item no-border-list">{{ post.title }}</a>
+            {% empty %}
+            暂无文章！
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    <div class="card sidebar-card shadow-sm">
+        <h6 class="card-header">归档</h6>
+        {% archives as date_list %}
+        <ul class="list-group">
+            {% for date in date_list %}
+            <a href="{% url 'archives' date.year date.month %}" class="list-group-item no-border-list">{{ date.year }} 年 {{ date.month }} 月</a>
+            {% empty %}
+            暂无归档
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    <div class="card sidebar-card shadow-sm">
+        <h6 class="card-header">分类</h6>
+        {% get_categories as category_list %}
+        <ul class="list-group">
+            {% for category in category_list %}
+            <a href="{% url 'category' category.pk %}" class="list-group-item no-border-list">{{ category.name }}<span class="post-count">({{ category.num_posts }})</span></a>
+            {% empty %}
+            暂无分类！
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="card sidebar-card shadow-sm">
+        <h6 class="card-header">标签</h6>
+        {% get_tags as tag_list %}
+        <ul class="list-group">
+            {% for tag in tag_list %}
+            <a href="{% url 'tag' tag.pk %}" class="list-group-item no-border-list">{{ tag.name }}</a>
+            {% empty %}
+            暂无标签！
+            {% endfor %}
+        </ul>
+    </div>
+
+
+
+    <div class="card sidebar-card">
+        <a href="{% url 'rss' %}" class="list-group-item no-border-list">RSS订阅  <i class="fas fa-rss"></i></a>
+    </div>
+</div>
+{% endblock %}
+
