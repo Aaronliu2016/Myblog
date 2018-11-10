@@ -1,0 +1,1 @@
+$('.card-text img').addClass('img-fluid mx-auto d-block');
